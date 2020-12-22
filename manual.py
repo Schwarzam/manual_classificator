@@ -138,6 +138,8 @@ def classificate():
 	ROWNUM = int(rownum.get())
 
 	line = df.iloc[ROWNUM]
+	dflabel = tk.Label(text=f"{ROWNUM}")
+	dflabel.grid(row=53, column=0, pady=50, padx=40)
 	dflabel = tk.Label(text=f"ID: {line['ID']}")
 	dflabel.grid(row=8, column=0, pady=50, padx=40)
 	dflabel = tk.Label(text=f"RA: {line['RA']}")
@@ -181,6 +183,8 @@ def next():
 	splusim.destroy()
 
 	line = df.iloc[ROWNUM]
+	dflabel = tk.Label(text=f"{ROWNUM}")
+	dflabel.grid(row=53, column=0, pady=50, padx=40)
 	dflabel = tk.Label(text=f"ID: {line['ID']}")
 	dflabel.grid(row=8, column=0, pady=50, padx=40)
 	dflabel = tk.Label(text=f"RA: {line['RA']}")
