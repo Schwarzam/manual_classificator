@@ -147,22 +147,28 @@ def classificate():
 	dflabel = tk.Label(text=f"DEC: {line['DEC']}")
 	dflabel.grid(row=8, column=2, pady=50, padx=40)
 
-	req = requests.get(f"http://splus.cloud/media/jpgsGRI/{line['ID'].split('.')[1]}/{line['ID']}.jpg")
-	image = Image.open(BytesIO(req.content))
-	image = ImageOps.flip(image)
-	my_img = ImageTk.PhotoImage(image)
+	try:
+		req = requests.get(f"http://splus.cloud/media/jpgsGRI/{line['ID'].split('.')[1]}/{line['ID']}.jpg")
+		image = Image.open(BytesIO(req.content))
+		image = ImageOps.flip(image)
+		my_img = ImageTk.PhotoImage(image)
 
-	splusim = Label(image=my_img)
-	splusim.image = my_img
-	splusim.grid(row = 10)
+		splusim = Label(image=my_img)
+		splusim.image = my_img
+		splusim.grid(row = 10)
+	except:
+		print('Splus image server down!')
 
-	req = requests.get(f"https://www.legacysurvey.org/viewer/cutout.jpg?ra={line['RA']}&dec={line['DEC']}&layer=dr8&pixscale=0.2")
-	image = Image.open(BytesIO(req.content))
-	image = image.resize((200, 200))
-	my_img = ImageTk.PhotoImage(image)
-	my_label = Label(image=my_img)
-	my_label.image = my_img
-	my_label.grid(row = 11)
+	try:
+		req = requests.get(f"https://www.legacysurvey.org/viewer/cutout.jpg?ra={line['RA']}&dec={line['DEC']}&layer=dr8&pixscale=0.2")
+		image = Image.open(BytesIO(req.content))
+		image = image.resize((200, 200))
+		my_img = ImageTk.PhotoImage(image)
+		my_label = Label(image=my_img)
+		my_label.image = my_img
+		my_label.grid(row = 11)
+	except:
+		print('Legacy image server down!')
 
 	
 	DFROW = line
@@ -192,23 +198,28 @@ def next():
 	dflabel = tk.Label(text=f"DEC: {line['DEC']}")
 	dflabel.grid(row=8, column=2, pady=50, padx=40)
 
-	req = requests.get(f"http://splus.cloud/media/jpgsGRI/{line['ID'].split('.')[1]}/{line['ID']}.jpg")
-	image = Image.open(BytesIO(req.content))
-	image = ImageOps.flip(image)
-	my_img = ImageTk.PhotoImage(image)
-	splusim = Label(image=my_img)
-	splusim.image = my_img
-	splusim.grid(row = 10)
+	try:
+		req = requests.get(f"http://splus.cloud/media/jpgsGRI/{line['ID'].split('.')[1]}/{line['ID']}.jpg")
+		image = Image.open(BytesIO(req.content))
+		image = ImageOps.flip(image)
+		my_img = ImageTk.PhotoImage(image)
+		splusim = Label(image=my_img)
+		splusim.image = my_img
+		splusim.grid(row = 10)
+	except:
+		print('Splus image server down!')
 
+	try:
+		req = requests.get(f"https://www.legacysurvey.org/viewer/cutout.jpg?ra={line['RA']}&dec={line['DEC']}&layer=dr8&pixscale=0.2")
+		image = Image.open(BytesIO(req.content))
+		image = image.resize((200, 200))
+		my_img = ImageTk.PhotoImage(image)
 
-	req = requests.get(f"https://www.legacysurvey.org/viewer/cutout.jpg?ra={line['RA']}&dec={line['DEC']}&layer=dr8&pixscale=0.2")
-	image = Image.open(BytesIO(req.content))
-	image = image.resize((200, 200))
-	my_img = ImageTk.PhotoImage(image)
-
-	my_label = Label(image=my_img)
-	my_label.image = my_img
-	my_label.grid(row = 11)
+		my_label = Label(image=my_img)
+		my_label.image = my_img
+		my_label.grid(row = 11)
+	except:
+		print('Legacy image server down!')
 
 	global DFROW
 	DFROW = line
