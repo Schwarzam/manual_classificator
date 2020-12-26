@@ -112,7 +112,7 @@ def open_csv():
 
 
 	df = pd.read_csv(input_path.get())
-	del df['Unnamed: 0']
+
 	print('Input CSV loaded')
 
 	try:
