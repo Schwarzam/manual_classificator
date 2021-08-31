@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--8es4*vm&ksi3)94qydj8qa)8danlf@l@22do6+*#f5v)#12)2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'
+    'app.apps.AppConfig'
 ]
 
 MIDDLEWARE = [
@@ -124,3 +124,10 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+PROJECT_PATH_MEDIA = '/home/gustavo/manual_classificator/manual_classificator/media/'
+
+MEDIA_ROOT = PROJECT_PATH_MEDIA
+MEDIA_URL = '/media/'

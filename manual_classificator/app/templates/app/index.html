@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Classifier</title>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+<body style="margin: 10%;">
+	<h1>Classifier</h1>
+
+	<p style="position: absolute; right: 20px; top: 20px;" id = "count"></p>
+
+	<small>Insert Identifier: </small>
+	<input id="ident"/>
+
+	<br>
+	<br>
+	<small>Objects Path: </small>
+	<input id="path"/>
+
+	
+	<br>
+	<br>
+	<small>Classes: </small>
+	<input id="classes"/>
+	<button class="btn btn-primary" id="submit">Submit</button>
+	<br>
+	<br>
+
+	<img id="im" src="">
+
+	<div id = "buttons">
+		
+
+	</div>
+
+</body>
+
+
+<script type="text/javascript">
+	const submit = document.getElementById('submit')
+
+	var current_file = ""
+	var count = 0
+	var user = ""
+
+	submit.addEventListener('click', () => {
+		user = document.getElementById('ident').value
+		const path = document.getElementById('path').value
+
+		axios.post('/start/', {user: user, path: path})
+			.then(res => {
+				console.log(res.data)
+
+				generateClassBut()
+				current_file = res.data.cur
+				count = res.data.count
+				fill_image()
+				fill_count()
+			})
+	})
+
+
+	fill_image = (path) => {
+		const im = document.getElementById('im')
+		im.src = `/media/${current_file}`
+	}
+
+	fill_count = () => {
+		c = document.getElementById('count')
+		c.innerText = count
+	}
+
+
+	generateClassBut = () => {
+		const classes = document.getElementById('classes').value
+		const div = document.getElementById('buttons')
+
+		var buts = classes.split(',')
+		var nbutton = "";
+
+		buts.forEach(but => {
+
+			var i = but.trim()
+
+			nbutton = document.createElement('button')
+			nbutton.value = i
+			nbutton.id = i 
+			nbutton.classList.add("btn")
+			nbutton.classList.add("btn-secondary")
+			nbutton.innerText = i
+
+			nbutton.style.marginRight = '15px' 
+
+			nbutton.addEventListener('click', () => {
+				send_res(i)
+			})
+
+			div.appendChild(nbutton)
+		})
+	}
+
+	send_res = (response) => {
+		console.log('salve')
+		axios.post('/classify/', {file: current_file, class: response, user: user})
+			.then(res => {
+				current_file = res.data.cur
+				count = res.data.count
+				fill_image()
+				fill_count()
+			})
+	}
+
+
+</script>
+
+
+</html>
